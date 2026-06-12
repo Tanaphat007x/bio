@@ -41,15 +41,18 @@
             overflow-x: hidden;
             position: relative;
             
-            /* พื้นหลังไล่สีสไตล์ Acid Graphic */
+            /* อัปเกรดพื้นหลังใหม่: ฟิกซ์ขนาดให้ครอบคลุมเต็มจอถาวร ไม่แตก ไม่ซ้ำซ้อนตอนเลื่อนลง */
             background-image: 
                 radial-gradient(circle at 10% 10%, rgba(0, 255, 204, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 90% 20%, rgba(255, 0, 127, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 50% 80%, rgba(121, 40, 202, 0.2) 0%, transparent 50%),
                 linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
-            /* ลูกเล่นตารางตลับ Cyber Grid */
             background-size: 100% 100%, 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            
+            /* ล็อคพื้นหลังให้อยู่กับที่ (Fix) และไม่ให้เกิดรอยต่อตอนเลื่อนลง */
+            background-attachment: fixed;
+            background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
         }
 
         /* --- แสงเลเซอร์วิ่งผ่านหน้าจอ (Neon Light Streaks) --- */
