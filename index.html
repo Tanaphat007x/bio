@@ -64,7 +64,7 @@
             width: 200%;
             height: 200%;
             background: linear-gradient(45deg, transparent 45%, rgba(0, 255, 204, 0.03) 50%, transparent 55%);
-            animation: laser sweep 12s linear infinite;
+            animation: sweep 12s linear infinite;
             pointer-events: none;
         }
 
@@ -324,9 +324,145 @@
             letter-spacing: 2px;
             text-transform: uppercase;
         }
+
+        /* 🎵 --- Gen Z Music Player Widget (ลอยขอบขวาล่าง) --- 🎵 */
+        .music-player {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: rgba(18, 20, 27, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 18px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            transition: var(--transition);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .music-player:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-neon);
+            box-shadow: 0 10px 25px rgba(0, 255, 204, 0.2);
+        }
+
+        /* แผ่นเสียงหมุนๆ เวลาเล่นเพลง */
+        .music-disc {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #111, #333);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--accent-neon);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+            animation: diskRotate 4s linear infinite;
+            animation-play-state: paused; /* หยุดหมุนตอนเริ่มต้น */
+        }
+
+        .music-disc i {
+            font-size: 14px;
+            color: var(--accent-neon);
+        }
+
+        .music-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .music-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .music-status {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* อนิเมชั่นคลื่นเสียงวิ่งจิ๋วๆ (Audio Wave Visualizer) */
+        .wave-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 12px;
+            margin-left: 5px;
+        }
+
+        .wave-bar {
+            width: 2px;
+            height: 3px;
+            background-color: var(--accent-neon);
+            border-radius: 1px;
+            transition: height 0.2s ease;
+        }
+
+        /* คลาสสิกอนิเมชั่นเมื่อเพลงทำงาน */
+        .playing .music-disc { animation-play-state: running; }
+        .playing .wave-bar:nth-child(1) { animation: pulseWave 0.6s ease infinite alternate; }
+        .playing .wave-bar:nth-child(2) { animation: pulseWave 0.9s ease infinite alternate 0.1s; }
+        .playing .wave-bar:nth-child(3) { animation: pulseWave 0.4s ease infinite alternate 0.2s; }
+
+        @keyframes diskRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseWave {
+            0% { height: 3px; }
+            100% { height: 14px; }
+        }
+
+        /* ซ่อน Iframe ตัวเล่นของ YouTube ไว้เบื้องหลัง */
+        #yt-player {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 0;
+            pointer-events: none;
+        }
+
+        /* ปรับดีไซน์ซัพพอร์ตจอมือถือเล็กๆ ไม่ให้ปุ่มทับข้อความ */
+        @media (max-width: 480px) {
+            .music-player {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 14px;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- ซ่อนระบบเล่นเสียงเบื้องหลังของ YouTube API -->
+    <div id="yt-player"></div>
+
+    <!-- 🎵 Gen Z Music Player Widget (ปุ่มเปิด-ปิด ลอยขวาล่าง) 🎵 -->
+    <div class="music-player" id="musicWidget" onclick="toggleMusic()">
+        <div class="music-disc">
+            <i class="fa-solid fa-music"></i>
+        </div>
+        <div class="music-info">
+            <span class="music-title">iluvujayjay - รู้มือ^^</span>
+            <span class="music-status" id="trackStatus">Paused</span>
+        </div>
+        <div class="wave-container">
+            <div class="wave-bar"></div>
+            <div class="wave-row wave-bar"></div>
+            <div class="wave-bar"></div>
+        </div>
+    </div>
 
     <!-- ⚡ กองทัพสติกเกอร์ลอยสลับตำแหน่งแบบจุใจเต็มหน้าจอ ⚡ -->
     <div class="bg-sticker st-1">👾</div>
@@ -407,6 +543,59 @@
         </div>
 
     </div>
+
+    <!-- 🔮 ระบบควบคุมเพลง YouTube Background API 🔮 -->
+    <script>
+        // เรียกใช้งานระบบเล่นเพลงของ YouTube
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        var isPlaying = false;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-player', {
+                height: '0',
+                width: '0',
+                videoId: 'OG0-w2UtHMI', // ไอดีเพลง เจ็บจนชิน - MEYOU
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'OG0-w2UtHMI' // สั่งเล่นวนซ้ำ
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // ระบบพร้อมใช้งาน (แต่บราวเซอร์จะบล็อกไม่ให้เปิดเสียงเองจนกว่ายูสเซอร์จะกดคลิกแรก)
+        }
+
+        // ฟังก์ชันสลับ เปิด-ปิด เพลงเมื่อคลิกที่ Widget
+        function toggleMusic() {
+            if (!player) return;
+            
+            var widget = document.getElementById('musicWidget');
+            var statusText = document.getElementById('trackStatus');
+
+            if (!isPlaying) {
+                player.playVideo();
+                widget.classList.add('playing');
+                statusText.innerText = "Playing";
+                isPlaying = true;
+            } else {
+                player.pauseVideo();
+                widget.classList.remove('playing');
+                statusText.innerText = "Paused";
+                isPlaying = false;
+            }
+        }
+    </script>
 
 </body>
 </html>
