@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Make friends</title>
     <!-- นำเข้า Font ยอดฮิตสไตล์ Tech/Modern -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,7 +37,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 40px 20px 120px 20px; /* เพิ่ม Padding ล่างเผื่อพื้นที่ให้ Widget ลอยบนมือถือ */
             overflow-x: hidden;
             position: relative;
             
@@ -313,29 +313,32 @@
             text-transform: uppercase;
         }
 
-        /* 🎵 --- Gen Z Music Player Widget (พร้อมแถบลด-เพิ่มเสียง) --- 🎵 */
+        /* 🎵 --- 🪐 มิติใหม่แห่งดีไซน์: Gen Z Cyber Music Player 🪐 --- 🎵 */
         .music-player {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            background: rgba(18, 20, 27, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 18px;
+            background: rgba(10, 12, 18, 0.88);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            padding: 12px 20px;
             border-radius: 40px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            z-index: 999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            gap: 14px;
+            z-index: 99999; /* มั่นใจว่าอยู่บนสุดแน่นอน */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 
+                        0 0 15px rgba(0, 255, 204, 0.1),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
             transition: var(--transition);
             user-select: none;
         }
 
         .music-player:hover {
-            border-color: var(--accent-neon);
-            box-shadow: 0 10px 25px rgba(0, 255, 204, 0.2);
+            border-color: var(--accent-pink);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 
+                        0 0 25px rgba(255, 0, 127, 0.25);
         }
 
         /* โซนกดเล่น/หยุดเพลง */
@@ -347,22 +350,33 @@
         }
 
         .music-disc {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(45deg, #111, #333);
+            width: 36px;
+            height: 36px;
+            background: radial-gradient(circle, #222 30%, #050505 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 2px solid var(--accent-neon);
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+            box-shadow: 0 0 12px rgba(0, 255, 204, 0.4);
             animation: diskRotate 4s linear infinite;
             animation-play-state: paused;
+            transition: var(--transition);
+        }
+
+        .music-player:hover .music-disc {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 12px rgba(255, 0, 127, 0.5);
         }
 
         .music-disc i {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--accent-neon);
+            transition: var(--transition);
+        }
+        
+        .music-player:hover .music-disc i {
+            color: var(--accent-pink);
         }
 
         .music-info {
@@ -371,74 +385,89 @@
         }
 
         .music-title {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             color: #fff;
             white-space: nowrap;
+            letter-spacing: -0.2px;
         }
 
         .music-status {
             font-size: 9px;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
         /* 🔊 แถบสไลด์ปรับระดับเสียง (Volume Controls) */
         .volume-control-container {
             display: flex;
             align-items: center;
-            gap: 8px;
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-            padding-left: 10px;
-            margin-left: 5px;
+            gap: 10px;
+            border-left: 1px solid rgba(255, 255, 255, 0.12);
+            padding-left: 12px;
+            margin-left: 4px;
         }
 
         .volume-control-container i {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
-            width: 14px;
+            width: 16px;
+            transition: var(--transition);
+        }
+
+        .music-player:hover .volume-control-container i {
+            color: #fff;
         }
 
         .volume-slider {
             -webkit-appearance: none;
             appearance: none;
-            width: 60px;
-            height: 4px;
-            border-radius: 2px;
-            background: rgba(255, 255, 255, 0.15);
+            width: 65px;
+            height: 5px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.12);
             outline: none;
             cursor: pointer;
-            transition: width 0.3s;
+            transition: all 0.2s;
         }
 
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: var(--accent-neon);
-            box-shadow: 0 0 8px var(--accent-neon);
+            box-shadow: 0 0 10px var(--accent-neon);
             cursor: pointer;
+            transition: transform 0.1s;
+        }
+        
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.25);
+            background: var(--accent-pink);
+            box-shadow: 0 0 10px var(--accent-pink);
         }
 
         .volume-slider::-moz-range-thumb {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: var(--accent-neon);
-            box-shadow: 0 0 8px var(--accent-neon);
+            box-shadow: 0 0 10px var(--accent-neon);
             cursor: pointer;
             border: none;
+            transition: transform 0.1s;
         }
 
         .wave-container {
             display: flex;
             align-items: flex-end;
-            gap: 2px;
-            height: 12px;
-            margin-left: 5px;
+            gap: 2.5px;
+            height: 14px;
+            margin-left: 4px;
         }
 
         .wave-bar {
@@ -446,7 +475,11 @@
             height: 3px;
             background-color: var(--accent-neon);
             border-radius: 1px;
-            transition: height 0.2s ease;
+            transition: height 0.2s ease, background-color 0.3s;
+        }
+        
+        .music-player:hover .wave-bar {
+            background-color: var(--accent-pink);
         }
 
         .playing .music-disc { animation-play-state: running; }
@@ -461,7 +494,7 @@
 
         @keyframes pulseWave {
             0% { height: 3px; }
-            100% { height: 14px; }
+            100% { height: 16px; }
         }
 
         #yt-player {
@@ -472,15 +505,44 @@
             pointer-events: none;
         }
 
+        /* 📱 โค้ดเวทมนตร์สำหรับจัดระเบียบบนหน้าจอมือถือ (Responsive Dynamic Dock) */
         @media (max-width: 480px) {
             .music-player {
-                bottom: 15px;
-                right: 15px;
-                padding: 10px 14px;
-                gap: 8px;
+                bottom: 20px; /* ลอยห่างขอบล่างพอดีสวย */
+                right: 16px;
+                left: 16px;   /* บังคับลอยแผ่เป็นแคปซูลตรงกลางขอบล่าง */
+                justify-content: space-between;
+                padding: 12px 18px;
+                border-radius: 30px;
+                border: 1.5px solid rgba(0, 255, 204, 0.3); /* เพิ่มความชัดของเส้นขอบบนมือถือ */
+                box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 
+                            0 0 20px rgba(0, 255, 204, 0.2);
             }
+            
+            .player-trigger {
+                flex-grow: 1;
+            }
+            
+            .music-title {
+                font-size: 12px;
+                max-width: 110px; /* กันชื่อยาวเกินไปจนล้นหน้าจอมือถือ */
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .volume-control-container {
+                gap: 8px;
+                padding-left: 10px;
+            }
+
             .volume-slider {
-                width: 45px;
+                width: 75px; /* เพิ่มพื้นที่ความกว้างให้ใช้นิ้วลากปรับเสียงง่ายขึ้นมาก */
+                height: 6px; /* หนาขึ้นเล็กน้อยเพื่อให้กดติดง่าย */
+            }
+            
+            .volume-slider::-webkit-slider-thumb {
+                width: 14px; /* ขยายปุ่มจับให้ใหญ่รับกับนิ้วสัมผัส */
+                height: 14px;
             }
         }
     </style>
@@ -490,32 +552,7 @@
     <!-- ซ่อนระบบเล่นเสียงเบื้องหลังของ YouTube API -->
     <div id="yt-player"></div>
 
-    <!-- 🎵 Gen Z Music Player Widget 🎵 -->
-    <div class="music-player" id="musicWidget">
-        <!-- ฝั่งซ้ายสำหรับ คลิกเปิด-ปิด เพลง -->
-        <div class="player-trigger" onclick="toggleMusic()">
-            <div class="music-disc">
-                <i class="fa-solid fa-music"></i>
-            </div>
-            <div class="music-info">
-                <span class="music-title">iluvujayjay - รู้มือ^^</span>
-                <span class="music-status" id="trackStatus">Paused</span>
-            </div>
-            <div class="wave-container">
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-            </div>
-        </div>
-
-        <!-- ฝั่งขวาสำหรับ ปรับระดับเสียง -->
-        <div class="volume-control-container">
-            <i class="fa-solid fa-volume-low" id="volumeIcon"></i>
-            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="45" oninput="changeVolume(this.value)">
-        </div>
-    </div>
-
-    <!-- ⚡ กองทัพสติกเกอร์ลอยหน้าจอ ⚡ -->
+    <!-- 🔮 ระบบกองทัพสติกเกอร์ลอยหน้าจอ 🔮 -->
     <div class="bg-sticker st-1">👾</div>
     <div class="bg-sticker st-2">☁️</div>
     <div class="bg-sticker st-3">💖</div>
@@ -525,7 +562,6 @@
     <div class="bg-sticker st-7">🦄</div>
     <div class="bg-sticker st-8">🫧</div>
     
-    <!-- 🔄 สติกเกอร์ไซส์เล็กสายหมุนควงสว่าน 🔄 -->
     <div class="bg-sticker st-spin sp-1">⚡</div>
     <div class="bg-sticker st-spin sp-2">⭐</div>
     <div class="bg-sticker st-spin sp-3">🪐</div>
@@ -542,7 +578,7 @@
             <p class="bio">Digital Innovation & Marketing ✨<br>รู้จักแล้วจะรักเอง</p>
         </div>
 
-        <!-- ส่วนของลิงก์ -->
+        <!-- ส่วนของลิงก์โซเชียล -->
         <div class="links-grid">
             
             <!-- LINE -->
@@ -595,6 +631,31 @@
 
     </div>
 
+    <!-- 🎵 Gen Z Music Player Widget (วางไว้นอก Container เพื่อให้ล็อกตำแหน่งอิสระ) 🎵 -->
+    <div class="music-player" id="musicWidget">
+        <!-- ฝั่งซ้ายสำหรับ คลิกเปิด-ปิด เพลง -->
+        <div class="player-trigger" onclick="toggleMusic()">
+            <div class="music-disc">
+                <i class="fa-solid fa-music"></i>
+            </div>
+            <div class="music-info">
+                <span class="music-title">iluvujayjay - รู้มือ^^</span>
+                <span class="music-status" id="trackStatus">Paused</span>
+            </div>
+            <div class="wave-container">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+        </div>
+
+        <!-- ฝั่งขวาสำหรับ ปรับระดับเสียง -->
+        <div class="volume-control-container">
+            <i class="fa-solid fa-volume-low" id="volumeIcon"></i>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="45" oninput="changeVolume(this.value)">
+        </div>
+    </div>
+
     <!-- 🔮 ระบบควบคุมเพลง YouTube Background API 🔮 -->
     <script>
         var tag = document.createElement('script');
@@ -604,7 +665,7 @@
 
         var player;
         var isPlaying = false;
-        var defaultVolume = 45; // ตั้งค่าความดังเริ่มต้นที่ 45%
+        var defaultVolume = 45; 
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player', {
@@ -612,7 +673,7 @@
                 width: '0',
                 videoId: 'OG0-w2UtHMI', // ID เพลง เจ็บจนชิน - MEYOU
                 playerVars: {
-                    'autoplay': 1,       // เปิดการทำงาน Autoplay ในโค้ด
+                    'autoplay': 1,       
                     'controls': 0,
                     'loop': 1,
                     'playlist': 'OG0-w2UtHMI'
@@ -625,25 +686,20 @@
         }
 
         function onPlayerReady(event) {
-            // ตั้งค่าระดับเสียงไว้ที่ 45% ตั้งแต่แรกโหลด
             player.setVolume(defaultVolume);
-            
-            // พยายามสั่งเปิดเพลงทันทีที่โหลดเสร็จ
             player.playVideo();
             
-            // แก้ไขปัญหาเบราว์เซอร์บล็อก Autoplay: ถ้าผู้ใช้กดคลิกแรกที่หน้าจอ ให้ตัวเพลงสั่งเล่นเองอัตโนมัติ
+            // ปลดล็อกระบบบล็อก Autoplay ของเบราว์เซอร์มือถือ
             document.body.addEventListener('click', function() {
                 if (player && !isPlaying) {
-                    // ตรวจสอบสถานะว่ากำลังเล่นจริงไหม ถ้ายังไม่ยอมเล่นให้บังคับเปิดเสียง 45% และกดเล่น
                     if(player.getPlayerState() !== 1) {
                         player.setVolume(defaultVolume);
                         player.playVideo();
                     }
                 }
-            }, { once: true }); // ทำงานแค่ครั้งเดียวพอ
+            }, { once: true }); 
         }
 
-        // คอยดักจับสถานะเพลงจาก YouTube จริงๆ เพื่ออัปเดตหน้าตา UI สวิตช์ให้ตรงกัน
         function onPlayerStateChange(event) {
             var widget = document.getElementById('musicWidget');
             var statusText = document.getElementById('trackStatus');
@@ -659,10 +715,8 @@
             }
         }
 
-        // ฟังก์ชันสลับ เปิด-ปิด เพลงเมื่อกดที่ Widget
         function toggleMusic() {
             if (!player) return;
-            
             if (!isPlaying) {
                 player.playVideo();
             } else {
@@ -670,19 +724,14 @@
             }
         }
 
-        // ฟังก์ชันสำหรับการปรับระดับเสียงและเปลี่ยนไอคอนตามความดัง
         function changeVolume(volumeValue) {
             if (!player) return;
-            
-            // สั่งปรับเสียงในระบบของ YouTube
             player.setVolume(volumeValue);
-            
             var volIcon = document.getElementById('volumeIcon');
             
-            // ปรับเปลี่ยนไอคอนลำโพงตามระดับเสียงเพื่อความสมจริง
             if (volumeValue == 0) {
                 volIcon.className = "fa-solid fa-volume-xmark";
-            } else if (volumeValue < 50) {
+            } else if (volumeValue < 35) {
                 volIcon.className = "fa-solid fa-volume-low";
             } else {
                 volIcon.className = "fa-solid fa-volume-high";
