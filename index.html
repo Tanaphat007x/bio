@@ -7,7 +7,7 @@
     <!-- นำเข้า Font ยอดฮิตสไตล์ Tech/Modern -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2=family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <!-- นำเข้า Icon จาก FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -36,9 +36,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh; /* แก้ไข: เปลี่ยนจาก height เป็น min-height เพื่อให้รองรับหน้าจอมือถือเวลามีการเลื่อนลง */
             padding: 40px 20px;
-            overflow: hidden;
+            overflow-x: hidden; /* แก้ไข: เปลี่ยนจาก overflow: hidden เพื่อให้เลื่อนหน้าจอแนวตั้งได้ โดยที่สติกเกอร์ไม่ล้นออกแนวนอน */
             position: relative;
             
             /* อัปเกรดพื้นหลังใหม่: ฟิกซ์ขนาดให้ครอบคลุมเต็มจอถาวร ไม่แตก ไม่ซ้ำซ้อนตอนเลื่อนลง */
@@ -459,7 +459,7 @@
         </div>
         <div class="wave-container">
             <div class="wave-bar"></div>
-            <div class="wave-row wave-bar"></div>
+            <div class="wave-bar"></div> <!-- แก้ไขเอาคลาส wave-row ที่ไม่ได้ใช้งานออก เพื่อความสะอาดของโค้ด -->
             <div class="wave-bar"></div>
         </div>
     </div>
@@ -559,12 +559,12 @@
             player = new YT.Player('yt-player', {
                 height: '0',
                 width: '0',
-                videoId: 'OG0-w2UtHMI', // ไอดีเพลง เจ็บจนชิน - MEYOU
+                videoId: 'OG0-w2UtHMI', // ไอดีเพลง เจ็บจนชิน - MEYOU (สามารถเปลี่ยนเป็น ID เพลงอื่นที่ชอบได้เลยครับ)
                 playerVars: {
                     'autoplay': 0,
                     'controls': 0,
                     'loop': 1,
-                    'playlist': 'OG0-w2UtHMI' // สั่งเล่นวนซ้ำ
+                    'playlist': 'OG0-w2UtHMI' // สั่งเล่นวนซ้ำเพลงเดิม
                 },
                 events: {
                     'onReady': onPlayerReady
