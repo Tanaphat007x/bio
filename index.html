@@ -7,7 +7,7 @@
     <!-- นำเข้า Font ยอดฮิตสไตล์ Tech/Modern -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2=family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <!-- นำเข้า Icon จาก FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -36,12 +36,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* แก้ไข: เปลี่ยนจาก height เป็น min-height เพื่อให้รองรับหน้าจอมือถือเวลามีการเลื่อนลง */
+            min-height: 100vh;
             padding: 40px 20px;
-            overflow-x: hidden; /* แก้ไข: เปลี่ยนจาก overflow: hidden เพื่อให้เลื่อนหน้าจอแนวตั้งได้ โดยที่สติกเกอร์ไม่ล้นออกแนวนอน */
+            overflow-x: hidden;
             position: relative;
             
-            /* อัปเกรดพื้นหลังใหม่: ฟิกซ์ขนาดให้ครอบคลุมเต็มจอถาวร ไม่แตก ไม่ซ้ำซ้อนตอนเลื่อนลง */
             background-image: 
                 radial-gradient(circle at 10% 10%, rgba(0, 255, 204, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 90% 20%, rgba(255, 0, 127, 0.15) 0%, transparent 40%),
@@ -50,12 +49,10 @@
                 linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
             background-size: 100% 100%, 100% 100%, 100% 100%, 30px 30px, 30px 30px;
             
-            /* ล็อคพื้นหลังให้อยู่กับที่ (Fix) และไม่ให้เกิดรอยต่อตอนเลื่อนลง */
             background-attachment: fixed;
             background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
         }
 
-        /* --- แสงเลเซอร์วิ่งผ่านหน้าจอ (Neon Light Streaks) --- */
         body::before {
             content: '';
             position: absolute;
@@ -73,7 +70,6 @@
             100% { transform: translate(20%, 20%); }
         }
 
-        /* --- กองทัพสติกเกอร์สไตล์ Gen Z Maximalism --- */
         .bg-sticker {
             position: absolute;
             font-size: 2.8rem;
@@ -84,7 +80,6 @@
             animation: floatAround 6s ease-in-out infinite alternate;
         }
 
-        /* จัดวางตำแหน่งสติกเกอร์กระจายทั่วจอ แบบตื้นลึกหนาบาง */
         .st-1 { top: 5%; left: 8%; animation-duration: 5s; font-size: 3.5rem; }
         .st-2 { top: 12%; right: 7%; animation-duration: 7s; animation-delay: 0.5s; }
         .st-3 { top: 40%; left: 4%; animation-duration: 8s; filter: blur(1px); opacity: 0.7; }
@@ -94,7 +89,6 @@
         .st-7 { bottom: 5%; left: 12%; animation-duration: 7.5s; font-size: 3.8rem; }
         .st-8 { bottom: 8%; right: 15%; animation-duration: 6.5s; filter: blur(1px); }
         
-        /* สติกเกอร์ชิ้นเล็กเน้นหมุน 360 องศา (Spinning Elements) */
         .st-spin {
             animation: spinAround 20s linear infinite;
             font-size: 2rem;
@@ -116,7 +110,6 @@
             100% { transform: rotate(360deg) translateY(0); }
         }
 
-        /* --- Main Content Container --- */
         .container {
             width: 100%;
             max-width: 440px;
@@ -127,7 +120,6 @@
             z-index: 10;
         }
 
-        /* --- Header Profile Section --- */
         .profile-card {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
@@ -202,7 +194,6 @@
             line-height: 1.6;
         }
 
-        /* --- Link Grid/Buttons Section --- */
         .links-grid {
             display: flex;
             flex-direction: column;
@@ -276,7 +267,6 @@
             transform: translateX(-8px);
         }
 
-        /* --- Hover Effects เด้งสู้มือสะใจวัยรุ่น --- */
         .link-card:hover {
             transform: translateY(-5px) scale(1.02);
             border-color: rgba(255, 255, 255, 0.2);
@@ -303,7 +293,6 @@
             transform: scale(1.1) rotate(5deg);
         }
         
-        /* คุมโทนแบรนด์สีสะท้อนแสงจัดจ้านเวลา Hover */
         .link-card:hover .fa-line { color: #00ff66; text-shadow: 0 0 15px rgba(0,255,102,0.6); }
         .link-card:hover .fa-instagram { color: #ff007f; text-shadow: 0 0 15px rgba(255,0,127,0.6); }
         .link-card:hover .fa-discord { color: #5865F2; text-shadow: 0 0 15px rgba(88,101,242,0.6); }
@@ -315,7 +304,6 @@
             color: var(--accent-neon);
         }
 
-        /* --- Footer Credit --- */
         .footer {
             text-align: center;
             font-size: 11px;
@@ -325,7 +313,7 @@
             text-transform: uppercase;
         }
 
-        /* 🎵 --- Gen Z Music Player Widget (ลอยขอบขวาล่าง) --- 🎵 */
+        /* 🎵 --- Gen Z Music Player Widget (พร้อมแถบลด-เพิ่มเสียง) --- 🎵 */
         .music-player {
             position: fixed;
             bottom: 25px;
@@ -342,17 +330,22 @@
             z-index: 999;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
             transition: var(--transition);
-            cursor: pointer;
             user-select: none;
         }
 
         .music-player:hover {
-            transform: scale(1.05);
             border-color: var(--accent-neon);
             box-shadow: 0 10px 25px rgba(0, 255, 204, 0.2);
         }
 
-        /* แผ่นเสียงหมุนๆ เวลาเล่นเพลง */
+        /* โซนกดเล่น/หยุดเพลง */
+        .player-trigger {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
         .music-disc {
             width: 32px;
             height: 32px;
@@ -364,7 +357,7 @@
             border: 2px solid var(--accent-neon);
             box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
             animation: diskRotate 4s linear infinite;
-            animation-play-state: paused; /* หยุดหมุนตอนเริ่มต้น */
+            animation-play-state: paused;
         }
 
         .music-disc i {
@@ -391,7 +384,55 @@
             letter-spacing: 1px;
         }
 
-        /* อนิเมชั่นคลื่นเสียงวิ่งจิ๋วๆ (Audio Wave Visualizer) */
+        /* 🔊 แถบสไลด์ปรับระดับเสียง (Volume Controls) */
+        .volume-control-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            padding-left: 10px;
+            margin-left: 5px;
+        }
+
+        .volume-control-container i {
+            font-size: 12px;
+            color: var(--text-muted);
+            width: 14px;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 60px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.15);
+            outline: none;
+            cursor: pointer;
+            transition: width 0.3s;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-neon);
+            box-shadow: 0 0 8px var(--accent-neon);
+            cursor: pointer;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-neon);
+            box-shadow: 0 0 8px var(--accent-neon);
+            cursor: pointer;
+            border: none;
+        }
+
         .wave-container {
             display: flex;
             align-items: flex-end;
@@ -408,7 +449,6 @@
             transition: height 0.2s ease;
         }
 
-        /* คลาสสิกอนิเมชั่นเมื่อเพลงทำงาน */
         .playing .music-disc { animation-play-state: running; }
         .playing .wave-bar:nth-child(1) { animation: pulseWave 0.6s ease infinite alternate; }
         .playing .wave-bar:nth-child(2) { animation: pulseWave 0.9s ease infinite alternate 0.1s; }
@@ -424,7 +464,6 @@
             100% { height: 14px; }
         }
 
-        /* ซ่อน Iframe ตัวเล่นของ YouTube ไว้เบื้องหลัง */
         #yt-player {
             position: absolute;
             width: 0;
@@ -433,12 +472,15 @@
             pointer-events: none;
         }
 
-        /* ปรับดีไซน์ซัพพอร์ตจอมือถือเล็กๆ ไม่ให้ปุ่มทับข้อความ */
         @media (max-width: 480px) {
             .music-player {
                 bottom: 15px;
                 right: 15px;
                 padding: 10px 14px;
+                gap: 8px;
+            }
+            .volume-slider {
+                width: 45px;
             }
         }
     </style>
@@ -448,23 +490,32 @@
     <!-- ซ่อนระบบเล่นเสียงเบื้องหลังของ YouTube API -->
     <div id="yt-player"></div>
 
-    <!-- 🎵 Gen Z Music Player Widget (ปุ่มเปิด-ปิด ลอยขวาล่าง) 🎵 -->
-    <div class="music-player" id="musicWidget" onclick="toggleMusic()">
-        <div class="music-disc">
-            <i class="fa-solid fa-music"></i>
+    <!-- 🎵 Gen Z Music Player Widget 🎵 -->
+    <div class="music-player" id="musicWidget">
+        <!-- ฝั่งซ้ายสำหรับ คลิกเปิด-ปิด เพลง -->
+        <div class="player-trigger" onclick="toggleMusic()">
+            <div class="music-disc">
+                <i class="fa-solid fa-music"></i>
+            </div>
+            <div class="music-info">
+                <span class="music-title">iluvujayjay - รู้มือ^^</span>
+                <span class="music-status" id="trackStatus">Paused</span>
+            </div>
+            <div class="wave-container">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
         </div>
-        <div class="music-info">
-            <span class="music-title">iluvujayjay - รู้มือ^^</span>
-            <span class="music-status" id="trackStatus">Paused</span>
-        </div>
-        <div class="wave-container">
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div> <!-- แก้ไขเอาคลาส wave-row ที่ไม่ได้ใช้งานออก เพื่อความสะอาดของโค้ด -->
-            <div class="wave-bar"></div>
+
+        <!-- ฝั่งขวาสำหรับ ปรับระดับเสียง -->
+        <div class="volume-control-container">
+            <i class="fa-solid fa-volume-low" id="volumeIcon"></i>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="45" oninput="changeVolume(this.value)">
         </div>
     </div>
 
-    <!-- ⚡ กองทัพสติกเกอร์ลอยสลับตำแหน่งแบบจุใจเต็มหน้าจอ ⚡ -->
+    <!-- ⚡ กองทัพสติกเกอร์ลอยหน้าจอ ⚡ -->
     <div class="bg-sticker st-1">👾</div>
     <div class="bg-sticker st-2">☁️</div>
     <div class="bg-sticker st-3">💖</div>
@@ -491,7 +542,7 @@
             <p class="bio">Digital Innovation & Marketing ✨<br>รู้จักแล้วจะรักเอง</p>
         </div>
 
-        <!-- ส่วนของลิงก์: ดีไซน์ใหม่ให้เด้งสะใจเวลากด -->
+        <!-- ส่วนของลิงก์ -->
         <div class="links-grid">
             
             <!-- LINE -->
@@ -546,7 +597,6 @@
 
     <!-- 🔮 ระบบควบคุมเพลง YouTube Background API 🔮 -->
     <script>
-        // เรียกใช้งานระบบเล่นเพลงของ YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -554,45 +604,88 @@
 
         var player;
         var isPlaying = false;
+        var defaultVolume = 45; // ตั้งค่าความดังเริ่มต้นที่ 45%
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player', {
                 height: '0',
                 width: '0',
-                videoId: 'OG0-w2UtHMI', // ไอดีเพลง เจ็บจนชิน - MEYOU (สามารถเปลี่ยนเป็น ID เพลงอื่นที่ชอบได้เลยครับ)
+                videoId: 'OG0-w2UtHMI', // ID เพลง เจ็บจนชิน - MEYOU
                 playerVars: {
-                    'autoplay': 0,
+                    'autoplay': 1,       // เปิดการทำงาน Autoplay ในโค้ด
                     'controls': 0,
                     'loop': 1,
-                    'playlist': 'OG0-w2UtHMI' // สั่งเล่นวนซ้ำเพลงเดิม
+                    'playlist': 'OG0-w2UtHMI'
                 },
                 events: {
-                    'onReady': onPlayerReady
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
                 }
             });
         }
 
         function onPlayerReady(event) {
-            // ระบบพร้อมใช้งาน (แต่บราวเซอร์จะบล็อกไม่ให้เปิดเสียงเองจนกว่ายูสเซอร์จะกดคลิกแรก)
+            // ตั้งค่าระดับเสียงไว้ที่ 45% ตั้งแต่แรกโหลด
+            player.setVolume(defaultVolume);
+            
+            // พยายามสั่งเปิดเพลงทันทีที่โหลดเสร็จ
+            player.playVideo();
+            
+            // แก้ไขปัญหาเบราว์เซอร์บล็อก Autoplay: ถ้าผู้ใช้กดคลิกแรกที่หน้าจอ ให้ตัวเพลงสั่งเล่นเองอัตโนมัติ
+            document.body.addEventListener('click', function() {
+                if (player && !isPlaying) {
+                    // ตรวจสอบสถานะว่ากำลังเล่นจริงไหม ถ้ายังไม่ยอมเล่นให้บังคับเปิดเสียง 45% และกดเล่น
+                    if(player.getPlayerState() !== 1) {
+                        player.setVolume(defaultVolume);
+                        player.playVideo();
+                    }
+                }
+            }, { once: true }); // ทำงานแค่ครั้งเดียวพอ
         }
 
-        // ฟังก์ชันสลับ เปิด-ปิด เพลงเมื่อคลิกที่ Widget
-        function toggleMusic() {
-            if (!player) return;
-            
+        // คอยดักจับสถานะเพลงจาก YouTube จริงๆ เพื่ออัปเดตหน้าตา UI สวิตช์ให้ตรงกัน
+        function onPlayerStateChange(event) {
             var widget = document.getElementById('musicWidget');
             var statusText = document.getElementById('trackStatus');
 
-            if (!isPlaying) {
-                player.playVideo();
+            if (event.data === YT.PlayerState.PLAYING) {
                 widget.classList.add('playing');
                 statusText.innerText = "Playing";
                 isPlaying = true;
             } else {
-                player.pauseVideo();
                 widget.classList.remove('playing');
                 statusText.innerText = "Paused";
                 isPlaying = false;
+            }
+        }
+
+        // ฟังก์ชันสลับ เปิด-ปิด เพลงเมื่อกดที่ Widget
+        function toggleMusic() {
+            if (!player) return;
+            
+            if (!isPlaying) {
+                player.playVideo();
+            } else {
+                player.pauseVideo();
+            }
+        }
+
+        // ฟังก์ชันสำหรับการปรับระดับเสียงและเปลี่ยนไอคอนตามความดัง
+        function changeVolume(volumeValue) {
+            if (!player) return;
+            
+            // สั่งปรับเสียงในระบบของ YouTube
+            player.setVolume(volumeValue);
+            
+            var volIcon = document.getElementById('volumeIcon');
+            
+            // ปรับเปลี่ยนไอคอนลำโพงตามระดับเสียงเพื่อความสมจริง
+            if (volumeValue == 0) {
+                volIcon.className = "fa-solid fa-volume-xmark";
+            } else if (volumeValue < 50) {
+                volIcon.className = "fa-solid fa-volume-low";
+            } else {
+                volIcon.className = "fa-solid fa-volume-high";
             }
         }
     </script>
