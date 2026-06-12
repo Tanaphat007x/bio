@@ -313,7 +313,7 @@
             text-transform: uppercase;
         }
 
-        /* 🎵 --- 🪐 มิติใหม่แห่งดีไซน์: Gen Z Cyber Music Player 🪐 --- 🎵 */
+        /* 🎵 --- 🪐 Gen Z Cyber Music Player 🪐 --- 🎵 */
         .music-player {
             position: fixed;
             bottom: 25px;
@@ -327,17 +327,16 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            z-index: 99999; /* มั่นใจว่าอยู่บนสุดแน่นอน */
+            z-index: 99999;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 
                         0 0 15px rgba(0, 255, 204, 0.1),
                         inset 0 1px 1px rgba(255, 255, 255, 0.1);
             transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
             user-select: none;
-            touch-action: none; /* ป้องกันไม่ให้จอลากเลื่อนตามนิ้วตอนขยับ Widget บนมือถือ */
+            touch-action: none;
             cursor: grab;
         }
 
-        /* เอฟเฟกต์ตอนที่กำลังลากย้ายเพลง */
         .music-player.dragging {
             cursor: grabbing;
             opacity: 0.95;
@@ -353,11 +352,11 @@
                         0 0 25px rgba(255, 0, 127, 0.25);
         }
 
-        /* โซนกดเล่น/หยุดเพลง */
         .player-trigger {
             display: flex;
             align-items: center;
             gap: 12px;
+            cursor: pointer;
         }
 
         .music-disc {
@@ -411,7 +410,6 @@
             font-weight: 600;
         }
 
-        /* 🔊 แถบสไลด์ปรับระดับเสียง (Volume Controls) */
         .volume-control-container {
             display: flex;
             align-items: center;
@@ -463,17 +461,6 @@
             box-shadow: 0 0 10px var(--accent-pink);
         }
 
-        .volume-slider::-moz-range-thumb {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--accent-neon);
-            box-shadow: 0 0 10px var(--accent-neon);
-            cursor: pointer;
-            border: none;
-            transition: transform 0.1s;
-        }
-
         .wave-container {
             display: flex;
             align-items: flex-end;
@@ -517,54 +504,30 @@
             pointer-events: none;
         }
 
-        /* 📱 โค้ดเวทมนตร์สำหรับจัดระเบียบบนหน้าจอมือถือ (Responsive Dynamic Dock) */
         @media (max-width: 480px) {
             .music-player {
-                bottom: 20px; /* ลอยห่างขอบล่างพอดีสวย */
+                bottom: 20px;
                 right: 16px;
-                left: 16px;   /* บังคับลอยแผ่เป็นแคปซูลตรงกลางขอบล่าง */
+                left: 16px;
                 justify-content: space-between;
                 padding: 12px 18px;
                 border-radius: 30px;
-                border: 1.5px solid rgba(0, 255, 204, 0.3); /* เพิ่มความชัดของเส้นขอบบนมือถือ */
-                box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 
-                            0 0 20px rgba(0, 255, 204, 0.2);
+                border: 1.5px solid rgba(0, 255, 204, 0.3);
+                box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 204, 0.2);
             }
-            
-            .player-trigger {
-                flex-grow: 1;
-            }
-            
-            .music-title {
-                font-size: 12px;
-                max-width: 110px; /* กันชื่อยาวเกินไปจนล้นหน้าจอมือถือ */
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .volume-control-container {
-                gap: 8px;
-                padding-left: 10px;
-            }
-
-            .volume-slider {
-                width: 75px; /* เพิ่มพื้นที่ความกว้างให้ใช้นิ้วลากปรับเสียงง่ายขึ้นมาก */
-                height: 6px; /* หนาขึ้นเล็กน้อยเพื่อให้กดติดง่าย */
-            }
-            
-            .volume-slider::-webkit-slider-thumb {
-                width: 14px; /* ขยายปุ่มจับให้ใหญ่รับกับนิ้วสัมผัส */
-                height: 14px;
-            }
+            .player-trigger { flex-grow: 1; }
+            .music-title { font-size: 12px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; }
+            .volume-control-container { gap: 8px; padding-left: 10px; }
+            .volume-slider { width: 75px; height: 6px; }
+            .volume-slider::-webkit-slider-thumb { width: 14px; height: 14px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ซ่อนระบบเล่นเสียงเบื้องหลังของ YouTube API -->
     <div id="yt-player"></div>
 
-    <!-- 🔮 ระบบกองทัพสติกเกอร์ลอยหน้าจอ 🔮 -->
+    <!-- กองทัพสติกเกอร์ -->
     <div class="bg-sticker st-1">👾</div>
     <div class="bg-sticker st-2">☁️</div>
     <div class="bg-sticker st-3">💖</div>
@@ -573,14 +536,12 @@
     <div class="bg-sticker st-6">🌈</div>
     <div class="bg-sticker st-7">🦄</div>
     <div class="bg-sticker st-8">🫧</div>
-    
     <div class="bg-sticker st-spin sp-1">⚡</div>
     <div class="bg-sticker st-spin sp-2">⭐</div>
     <div class="bg-sticker st-spin sp-3">🪐</div>
 
     <div class="container">
-        
-        <!-- ส่วนหัว: โปรไฟล์ของคุณ Bet -->
+        <!-- โปรไฟล์ -->
         <div class="profile-card">
             <div class="avatar-wrapper">
                 <img src="https://cdn.phototourl.com/free/2026-06-12-64934f5d-9a7f-4ed3-8c71-03c7eefa624f.jpg" alt="Avatar" class="avatar">
@@ -590,10 +551,8 @@
             <p class="bio">Digital Innovation & Marketing ✨<br>รู้จักแล้วจะรักเอง</p>
         </div>
 
-        <!-- ส่วนของลิงก์โซเชียล -->
+        <!-- ปุ่มโซเชียล -->
         <div class="links-grid">
-            
-            <!-- LINE -->
             <a href="https://line.me/ti/p/ld51ifTB1C" target="_blank" class="link-card full-width">
                 <i class="fa-brands fa-line"></i>
                 <div class="link-content">
@@ -603,9 +562,7 @@
                 <i class="fa-solid fa-arrow-right arrow-icon"></i>
             </a>
 
-            <!-- Grid Row -->
             <div class="grid-row">
-                <!-- Instagram -->
                 <a href="https://www.instagram.com/bxtevill/" target="_blank" class="link-card">
                     <i class="fa-brands fa-instagram"></i>
                     <div class="link-content">
@@ -614,7 +571,6 @@
                     </div>
                 </a>
 
-                <!-- Discord -->
                 <a href="https://discord.gg/nY7VVFMqY" target="_blank" class="link-card">
                     <i class="fa-brands fa-discord"></i>
                     <div class="link-content">
@@ -624,7 +580,6 @@
                 </a>
             </div>
 
-            <!-- Facebook -->
             <a href="https://www.facebook.com/apocalpe.evill" target="_blank" class="link-card full-width">
                 <i class="fa-brands fa-facebook"></i>
                 <div class="link-content">
@@ -633,19 +588,13 @@
                 </div>
                 <i class="fa-solid fa-arrow-right arrow-icon"></i>
             </a>
-
         </div>
 
-        <!-- ท้ายเว็บ -->
-        <div class="footer">
-            © 2026 • Powered by AI
-        </div>
-
+        <div class="footer">© 2026 • Powered by AI</div>
     </div>
 
-    <!-- 🎵 Gen Z Music Player Widget (ลบ onclick เดิมออกเพื่อย้ายมารองรับระบบสัมผัสอัจฉริยะ) 🎵 -->
+    <!-- Widget เพลง (เพิ่มระบบคลิกแยกต่างหากผ่าน ID) -->
     <div class="music-player" id="musicWidget">
-        <!-- ฝั่งซ้ายสำหรับ คลิกเปิด-ปิด เพลง -->
         <div class="player-trigger" id="playerTrigger">
             <div class="music-disc">
                 <i class="fa-solid fa-music"></i>
@@ -661,14 +610,12 @@
             </div>
         </div>
 
-        <!-- ฝั่งขวาสำหรับ ปรับระดับเสียง (แก้ไขค่าเริ่มต้น value เป็น 35) -->
         <div class="volume-control-container">
             <i class="fa-solid fa-volume-low" id="volumeIcon"></i>
             <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="35" oninput="changeVolume(this.value)">
         </div>
     </div>
 
-    <!-- 🔮 ระบบควบคุมเพลง YouTube Background API & Smooth Drag-and-Drop ระบบสัมผัส 🔮 -->
     <script>
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -677,13 +624,13 @@
 
         var player;
         var isPlaying = false;
-        var defaultVolume = 35; // แก้ไขระดับเสียงเริ่มต้นเบื้องหลังเป็น 35%
+        var defaultVolume = 25; 
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player', {
                 height: '0',
                 width: '0',
-                videoId: '4jXSoEIv2fw', // ID เพลง เจ็บจนชิน - MEYOU
+                videoId: '4jXSoEIv2fw', 
                 playerVars: {
                     'autoplay': 1,       
                     'controls': 0,
@@ -701,7 +648,6 @@
             player.setVolume(defaultVolume);
             player.playVideo();
             
-            // ปลดล็อกระบบบล็อก Autoplay ของเบราว์เซอร์มือถือ
             document.body.addEventListener('click', function() {
                 if (player && !isPlaying) {
                     if(player.getPlayerState() !== 1) {
@@ -750,21 +696,28 @@
             }
         }
 
-        // 🛸 --- ระบบลาก Widget เพลงย้ายตำแหน่งแบบสมูทขั้นสุด (Touch & Mouse Drag) --- 🛸
+        // 🛸 --- ระบบตรวจสอบการลากระดับเทพ (Fix คอมกดไม่หยุดเพลง) --- 🛸
         const widget = document.getElementById('musicWidget');
+        const trigger = document.getElementById('playerTrigger');
         let isDragging = false;
-        let hasMoved = false;
+        let dragThresholdPassed = false; // ตัวแปรเช็กว่าเกินระยะลากจริงไหม
         let startX, startY;
         let initialX, initialY;
 
+        // ดักจับฟังก์ชันกดปิดเพลงผ่าน "click" ดั้งเดิมของเบราว์เซอร์ เพื่อความแม่นยำสูงบน PC
+        trigger.addEventListener('click', (e) => {
+            // ถ้าเกิดว่าระบบกำลังทำการลากย้ายตำแหน่งอยู่ ไม่ต้องเปิด/ปิดเพลง
+            if (dragThresholdPassed) return;
+            toggleMusic();
+        });
+
         widget.addEventListener('pointerdown', (e) => {
-            // ถ้าไปกดโดนแถบสไลด์เสียง ให้ระบบเลื่อนเสียงทำงานปกติ (ไม่ดึงตัว Widget ลอยตาม)
+            // ปล่อยให้ปุ่มปรับเสียงทำงานอิสระ
             if (e.target.closest('.volume-control-container') || e.target.closest('.volume-slider')) return;
 
             isDragging = true;
-            hasMoved = false;
+            dragThresholdPassed = false;
 
-            // บันทึกตำแหน่งและขนาดพิกเซลแบบ Real-time ก่อนเริ่มลาก (ป้องกันตัว Widget บีบหรือขยายตอนหลุดจาก css-fixed เดิม)
             const rect = widget.getBoundingClientRect();
             initialX = rect.left;
             initialY = rect.top;
@@ -773,7 +726,6 @@
             startX = e.clientX;
             startY = e.clientY;
 
-            // ปรับ Style ไปเป็นพิกเซลดิบเพื่อเริ่มย้ายตำแหน่งอย่างอิสระ
             widget.style.bottom = 'auto';
             widget.style.right = 'auto';
             widget.style.left = initialX + 'px';
@@ -781,7 +733,7 @@
             widget.style.margin = '0';
             
             widget.classList.add('dragging');
-            widget.setPointerCapture(e.pointerId); // ล็อกการจับพิกัดสำหรับนิ้วมือหรือเมาส์ตัวนั้นๆ
+            widget.setPointerCapture(e.pointerId);
         });
 
         widget.addEventListener('pointermove', (e) => {
@@ -790,22 +742,24 @@
             const dx = e.clientX - startX;
             const dy = e.clientY - startY;
 
-            // ตรวจสอบระยะลากขยับ หากขยับเกิน 4 พิกเซลขึ้นไป ให้ถือว่าตั้งใจลาก (ไม่ใช่แค่แตะเฉยๆ)
-            if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
-                hasMoved = true;
+            // ตั้งค่าระยะลากขั้นต่ำ (10 พิกเซล) เพื่อกรองการสั่นของเมาส์เวลาคนคลิกปกติ
+            if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+                dragThresholdPassed = true; 
             }
 
-            let newX = initialX + dx;
-            let newY = initialY + dy;
+            // ถ้าผู้ใช้ตั้งใจลากย้ายตำแหน่งจริงๆ ให้กล่องขยับตามนิ้ว/เมาส์
+            if (dragThresholdPassed) {
+                let newX = initialX + dx;
+                let newY = initialY + dy;
 
-            // ระบบขอบเขตความปลอดภัย (Boundary Check) ล็อกไม่ให้ลาก Widget ตกขอบหน้าจอหายไป
-            const maxX = window.innerWidth - widget.offsetWidth;
-            const maxY = window.innerHeight - widget.offsetHeight;
-            newX = Math.max(0, Math.min(newX, maxX));
-            newY = Math.max(0, Math.min(newY, maxY));
+                const maxX = window.innerWidth - widget.offsetWidth;
+                const maxY = window.innerHeight - widget.offsetHeight;
+                newX = Math.max(0, Math.min(newX, maxX));
+                newY = Math.max(0, Math.min(newY, maxY));
 
-            widget.style.left = newX + 'px';
-            widget.style.top = newY + 'px';
+                widget.style.left = newX + 'px';
+                widget.style.top = newY + 'px';
+            }
         });
 
         widget.addEventListener('pointerup', (e) => {
@@ -813,11 +767,9 @@
             isDragging = false;
             widget.classList.remove('dragging');
             widget.releasePointerCapture(e.pointerId);
-
-            // เงื่อนไขอัจฉริยะ: ถ้า "แค่กดสัมผัสเฉยๆ" ไม่ได้ขยับย้ายตำแหน่ง และจุดที่ปล่อยนิ้วอยู่ในโซนปุ่มเปิดปิดเพลง ให้สลับสถานะเพลงทันที
-            if (!hasMoved && e.target.closest('#playerTrigger')) {
-                toggleMusic();
-            }
+            
+            // เคลียร์ค่าสถานะการลากหลังจากปล่อยเมาส์ออก 0.1 วินาที
+            setTimeout(() => { dragThresholdPassed = false; }, 100);
         });
     </script>
 
