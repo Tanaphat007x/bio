@@ -331,11 +331,23 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 
                         0 0 15px rgba(0, 255, 204, 0.1),
                         inset 0 1px 1px rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
+            transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
             user-select: none;
+            touch-action: none; /* ป้องกันไม่ให้จอลากเลื่อนตามนิ้วตอนขยับ Widget บนมือถือ */
+            cursor: grab;
         }
 
-        .music-player:hover {
+        /* เอฟเฟกต์ตอนที่กำลังลากย้ายเพลง */
+        .music-player.dragging {
+            cursor: grabbing;
+            opacity: 0.95;
+            transform: scale(1.03);
+            border-color: var(--accent-pink) !important;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 
+                        0 0 25px rgba(255, 0, 127, 0.4) !important;
+        }
+
+        .music-player:hover:not(.dragging) {
             border-color: var(--accent-pink);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 
                         0 0 25px rgba(255, 0, 127, 0.25);
@@ -346,7 +358,6 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            cursor: pointer;
         }
 
         .music-disc {
@@ -408,6 +419,7 @@
             border-left: 1px solid rgba(255, 255, 255, 0.12);
             padding-left: 12px;
             margin-left: 4px;
+            cursor: default;
         }
 
         .volume-control-container i {
@@ -631,15 +643,15 @@
 
     </div>
 
-    <!-- 🎵 Gen Z Music Player Widget (วางไว้นอก Container เพื่อให้ล็อกตำแหน่งอิสระ) 🎵 -->
+    <!-- 🎵 Gen Z Music Player Widget (ลบ onclick เดิมออกเพื่อย้ายมารองรับระบบสัมผัสอัจฉริยะ) 🎵 -->
     <div class="music-player" id="musicWidget">
         <!-- ฝั่งซ้ายสำหรับ คลิกเปิด-ปิด เพลง -->
-        <div class="player-trigger" onclick="toggleMusic()">
+        <div class="player-trigger" id="playerTrigger">
             <div class="music-disc">
                 <i class="fa-solid fa-music"></i>
             </div>
             <div class="music-info">
-                <span class="music-title">iluvujayjay - รู้มือ^^</span>
+                <span class="music-title">YUNGTARR - ครองโลก</span>
                 <span class="music-status" id="trackStatus">Paused</span>
             </div>
             <div class="wave-container">
@@ -649,14 +661,14 @@
             </div>
         </div>
 
-        <!-- ฝั่งขวาสำหรับ ปรับระดับเสียง -->
+        <!-- ฝั่งขวาสำหรับ ปรับระดับเสียง (แก้ไขค่าเริ่มต้น value เป็น 35) -->
         <div class="volume-control-container">
             <i class="fa-solid fa-volume-low" id="volumeIcon"></i>
-            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="45" oninput="changeVolume(this.value)">
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="35" oninput="changeVolume(this.value)">
         </div>
     </div>
 
-    <!-- 🔮 ระบบควบคุมเพลง YouTube Background API 🔮 -->
+    <!-- 🔮 ระบบควบคุมเพลง YouTube Background API & Smooth Drag-and-Drop ระบบสัมผัส 🔮 -->
     <script>
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -665,18 +677,18 @@
 
         var player;
         var isPlaying = false;
-        var defaultVolume = 45; 
+        var defaultVolume = 35; // แก้ไขระดับเสียงเริ่มต้นเบื้องหลังเป็น 35%
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player', {
                 height: '0',
                 width: '0',
-                videoId: 'OG0-w2UtHMI', // ID เพลง เจ็บจนชิน - MEYOU
+                videoId: '4jXSoEIv2fw', // ID เพลง เจ็บจนชิน - MEYOU
                 playerVars: {
                     'autoplay': 1,       
                     'controls': 0,
                     'loop': 1,
-                    'playlist': 'OG0-w2UtHMI'
+                    'playlist': '4jXSoEIv2fw'
                 },
                 events: {
                     'onReady': onPlayerReady,
@@ -731,12 +743,82 @@
             
             if (volumeValue == 0) {
                 volIcon.className = "fa-solid fa-volume-xmark";
-            } else if (volumeValue < 35) {
+            } else if (volumeValue < 50) {
                 volIcon.className = "fa-solid fa-volume-low";
             } else {
                 volIcon.className = "fa-solid fa-volume-high";
             }
         }
+
+        // 🛸 --- ระบบลาก Widget เพลงย้ายตำแหน่งแบบสมูทขั้นสุด (Touch & Mouse Drag) --- 🛸
+        const widget = document.getElementById('musicWidget');
+        let isDragging = false;
+        let hasMoved = false;
+        let startX, startY;
+        let initialX, initialY;
+
+        widget.addEventListener('pointerdown', (e) => {
+            // ถ้าไปกดโดนแถบสไลด์เสียง ให้ระบบเลื่อนเสียงทำงานปกติ (ไม่ดึงตัว Widget ลอยตาม)
+            if (e.target.closest('.volume-control-container') || e.target.closest('.volume-slider')) return;
+
+            isDragging = true;
+            hasMoved = false;
+
+            // บันทึกตำแหน่งและขนาดพิกเซลแบบ Real-time ก่อนเริ่มลาก (ป้องกันตัว Widget บีบหรือขยายตอนหลุดจาก css-fixed เดิม)
+            const rect = widget.getBoundingClientRect();
+            initialX = rect.left;
+            initialY = rect.top;
+            widget.style.width = rect.width + 'px';
+
+            startX = e.clientX;
+            startY = e.clientY;
+
+            // ปรับ Style ไปเป็นพิกเซลดิบเพื่อเริ่มย้ายตำแหน่งอย่างอิสระ
+            widget.style.bottom = 'auto';
+            widget.style.right = 'auto';
+            widget.style.left = initialX + 'px';
+            widget.style.top = initialY + 'px';
+            widget.style.margin = '0';
+            
+            widget.classList.add('dragging');
+            widget.setPointerCapture(e.pointerId); // ล็อกการจับพิกัดสำหรับนิ้วมือหรือเมาส์ตัวนั้นๆ
+        });
+
+        widget.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            // ตรวจสอบระยะลากขยับ หากขยับเกิน 4 พิกเซลขึ้นไป ให้ถือว่าตั้งใจลาก (ไม่ใช่แค่แตะเฉยๆ)
+            if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
+                hasMoved = true;
+            }
+
+            let newX = initialX + dx;
+            let newY = initialY + dy;
+
+            // ระบบขอบเขตความปลอดภัย (Boundary Check) ล็อกไม่ให้ลาก Widget ตกขอบหน้าจอหายไป
+            const maxX = window.innerWidth - widget.offsetWidth;
+            const maxY = window.innerHeight - widget.offsetHeight;
+            newX = Math.max(0, Math.min(newX, maxX));
+            newY = Math.max(0, Math.min(newY, maxY));
+
+            widget.style.left = newX + 'px';
+            widget.style.top = newY + 'px';
+        });
+
+        widget.addEventListener('pointerup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            widget.classList.remove('dragging');
+            widget.releasePointerCapture(e.pointerId);
+
+            // เงื่อนไขอัจฉริยะ: ถ้า "แค่กดสัมผัสเฉยๆ" ไม่ได้ขยับย้ายตำแหน่ง และจุดที่ปล่อยนิ้วอยู่ในโซนปุ่มเปิดปิดเพลง ให้สลับสถานะเพลงทันที
+            if (!hasMoved && e.target.closest('#playerTrigger')) {
+                toggleMusic();
+            }
+        });
     </script>
 
 </body>
